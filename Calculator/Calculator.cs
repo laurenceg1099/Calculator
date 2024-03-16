@@ -1,6 +1,6 @@
 ﻿namespace Calculator;
 
-class Calculator
+public class Calculator
 {
     public static float Calculate(string expression)
     {
@@ -27,7 +27,7 @@ class Calculator
         var operatorCount = tokens.OfType<OperatorToken>().Count(x => x.type == Type.Operator);
         while (true)
         {
-            DumpTokens(tokens,operation);
+            tokens.DumpTokens(operation);
             tokens = DoOperation(tokens, operation);
             var newCount = tokens.OfType<OperatorToken>().Count(x => x.type == Type.Operator);
             if (newCount < operatorCount)
@@ -132,8 +132,5 @@ class Calculator
     }
 
 
-    private static void DumpTokens(List<Tokens> tokens, string stage)
-    {
-        Console.WriteLine($"{stage} : {string.Join(", ", tokens)}");
-    }
+
 }

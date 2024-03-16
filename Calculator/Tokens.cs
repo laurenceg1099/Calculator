@@ -1,6 +1,6 @@
 ﻿namespace Calculator;
 
-class Tokens
+public class Tokens
 {
 
 
@@ -17,6 +17,11 @@ class NumericToken : Tokens
     public NumericToken(float value)
     {
         this.value = value;
+    }
+
+    public override string ToString()
+    {
+        return $"{value}";
     }
 }
 
@@ -39,6 +44,10 @@ class OperatorToken : Tokens
         Operator = newBit;
     }
 
+    public override string ToString()
+    {
+        return $"{Operator}";
+    }
 }
 
 
