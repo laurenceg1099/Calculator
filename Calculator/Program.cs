@@ -21,27 +21,37 @@ namespace Calculator
             var tokens = Tokenize(expression).ToList();
             var result = evaluate(tokens);
             return result;
-
+                
         }
 
         //recursive function to evaluate result 
         private static float evaluate(List<Tokens> tokens)
         {
             tokens = evalauteBrackets(tokens);
-            tokens = evaluateDivisions(tokens);
-            tokens = evalauteMultiplications(tokens);
-            tokens = evalauteAddition(tokens);
-            tokens = evalauteSubtracitons(tokens);
+            tokens = evalauteOperation(tokens,"/");
+            tokens = evalauteOperation(tokens,"*");
+            tokens = evalauteOperation(tokens,"+");
+            tokens = evalauteOperation(tokens, "-");
             return tokens[0].value;
 
         }
 
-        private static List<Tokens> evalauteSubtracitons(List<Tokens> tokens)
+        private static List<Tokens> evalauteOperation(List<Tokens> tokens,string operation)
         {
             var operatorCount = tokens.Where(x => x.type == Type.Operator).Count();
             while (true)
             {
-                tokens = doSubtraction(tokens);
+                switch (operation)
+                {
+                    case "+":
+                        tokens = doAddition(tokens); break;
+                    case "-":
+                        tokens = doSubtraction(tokens); break;
+                    case "*":
+                        tokens = doMultiplication(tokens); break;
+                    case "/":
+                        tokens = doDivision(tokens); break;
+                }
                 var newCount = tokens.Where(x => x.type == Type.Operator).Count();
                 if (newCount < operatorCount)
                     operatorCount = newCount;
@@ -65,20 +75,6 @@ namespace Calculator
             return newTokens;
         }
 
-        private static List<Tokens> evalauteMultiplications(List<Tokens> tokens)
-        {
-            var operatorCount = tokens.Where(x => x.type == Type.Operator).Count();
-            while (true)
-            {
-                tokens = doMultiplication(tokens);
-                var newCount = tokens.Where(x => x.type == Type.Operator).Count();
-                if (newCount < operatorCount)
-                    operatorCount = newCount;
-                else
-                    break;
-            }
-            return tokens;
-        }
 
         private static List<Tokens> doMultiplication(List<Tokens> tokens)
         {
@@ -94,20 +90,6 @@ namespace Calculator
             return newTokens;
         }
 
-        private static List<Tokens> evaluateDivisions(List<Tokens> tokens)
-        {
-            var operatorCount = tokens.Where(x => x.type == Type.Operator).Count();
-            while (true)
-            {
-                tokens = doDivision(tokens);
-                var newCount = tokens.Where(x => x.type == Type.Operator).Count();
-                if (newCount < operatorCount)
-                    operatorCount = newCount;
-                else
-                    break;
-            }
-            return tokens;
-        }
 
         private static List<Tokens> doDivision(List<Tokens> tokens)
         {
@@ -123,20 +105,7 @@ namespace Calculator
             return newTokens;
         }
 
-        private static List<Tokens> evalauteAddition(List<Tokens> tokens)
-        {
-            var operatorCount = tokens.Where(x => x.type == Type.Operator).Count();
-            while (true)
-            {
-                tokens = doAddition(tokens);
-                var newCount = tokens.Where(x => x.type == Type.Operator).Count();
-                if (newCount < operatorCount)
-                    operatorCount = newCount;
-                else
-                    break;
-            }
-            return tokens;
-        }
+
 
         private static List<Tokens> doAddition(List<Tokens> tokens)
         {
