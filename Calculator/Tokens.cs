@@ -2,37 +2,46 @@
 
 class Tokens
 {
-    public string token;
-    public Type type = Type.None;
-    public float value;
-    public Tokens(string newBit , bool isNum)
+
+
+}
+
+class NumericToken : Tokens
+{
+    public float value = 0f;
+    public NumericToken(string newbit)
     {
-        token = newBit;
-        if (isNum)
-        {
-            type = Type.Number;
-            value = float.Parse(newBit);
-        }
-        else
-        {
-            switch (newBit)
-            {
-                case "(":
-                    type = Type.OpenBracket; break;
-                case ")":
-                    type = Type.ClosedBracket; break;
-                default:
-                    type = Type.Operator; break;
-            }
-        }
+        value = float.Parse(newbit);
     }
 
-    public override string ToString()
+    public NumericToken(float value)
     {
-        return $"{type}, {token}";
+        this.value = value;
+    }
+}
+
+class OperatorToken : Tokens
+{
+    public string Operator;
+    public Type type;
+
+    public OperatorToken(string newBit)
+    {
+        switch (newBit)
+        {
+            case "(":
+                type = Type.OpenBracket; break;
+            case ")":
+                type = Type.ClosedBracket; break;
+            default:
+                type = Type.Operator; break;
+        }
+        Operator = newBit;
     }
 
 }
+
+
 
 
 static class Tokenizer
@@ -47,15 +56,17 @@ static class Tokenizer
             else
             {
                 if (bit.Length > 0)
-                    yield return new Tokens(bit, true);
-                yield return new Tokens(c.ToString(), false);
+                    yield return new NumericToken(bit);
+                yield return new OperatorToken(c.ToString());
                 bit = "";
             }
 
         }
         if (!string.IsNullOrEmpty(bit))
-            yield return new Tokens(bit, true);
+            yield return new NumericToken(bit);
 
 
     }
+
 }
+

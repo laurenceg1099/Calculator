@@ -18,18 +18,18 @@ class Calculator
         tokens = evalauteOperation(tokens,"*");
         tokens = evalauteOperation(tokens,"+");
         tokens = evalauteOperation(tokens, "-");
-        return tokens[0].value;
+        return ((NumericToken) tokens[0]).value;
 
     }
 
     private static List<Tokens> evalauteOperation(List<Tokens> tokens,string operation)
     {
-        var operatorCount = tokens.Where(x => x.type == Type.Operator).Count();
+        var operatorCount = tokens.OfType<OperatorToken>().Count(x => x.type == Type.Operator);
         while (true)
         {
             DumpTokens(tokens,operation);
             tokens = DoOperation(tokens, operation);
-            var newCount = tokens.Where(x => x.type == Type.Operator).Count();
+            var newCount = tokens.OfType<OperatorToken>().Count(x => x.type == Type.Operator);
             if (newCount < operatorCount)
                 operatorCount = newCount;
             else
@@ -46,29 +46,34 @@ class Calculator
             return tokens;
         var bits = tokens.Skip(firstIndex - 1).Take(3).ToList();
         var result = 0f;
+        var left = (NumericToken) bits[0];
+        var right = (NumericToken)bits[2];
         switch (operation)
         {
             case "/":
-                result = bits[0].value / bits[2].value; break;               
+                result = left.value / right.value; break;               
             case "*":
-                result = bits[0].value * bits[2].value; break;
+                result = left.value * right.value; break;
             case "+":
-                result = bits[0].value + bits[2].value; break;
+                result = left.value + right.value; break;
             case "-":
-                result = bits[0].value - bits[2].value; break;
+                result = left.value - right.value; break;
         }
         var newTokens = tokens.Take(firstIndex - 1).ToList();
-        newTokens.Add(new Tokens(result.ToString(), true));
+        newTokens.Add(new NumericToken(result));
         newTokens.AddRange(tokens.Skip(firstIndex + 2));
         return newTokens;
     }
 
-    private static int GetFistIndex(string Operator, List<Tokens> tokens)
+    private static int GetFistIndex(string op, List<Tokens> tokens)
     {
         for (int i = 0; i < tokens.Count; i++)
         {
-            if (tokens[i].token == Operator)
-                return i;
+            if (tokens[i] is OperatorToken ot)
+            {
+                if (ot.Operator == op)
+                    return i;
+            }
         }
         return -1;
     }
@@ -79,14 +84,20 @@ class Calculator
 
         for (var index = 0; index < tokens.Count; index++)
         {
-            var token = tokens[index];
-            if (token.type == Type.OpenBracket)
+            if (tokens[index] is OperatorToken ot)
             {
-                int end = FindMatchingEndBracket(tokens, index);
-                var inBrackets = tokens.Slice(index + 1, end - index - 1);
-                var value = evaluate(inBrackets);
-                newTokens.Add(new Tokens(value.ToString(), true));
-                index = end;
+                if (ot.type == Type.OpenBracket)
+                {
+                    int end = FindMatchingEndBracket(tokens, index);
+                    var inBrackets = tokens.Slice(index + 1, end - index - 1);
+                    var value = evaluate(inBrackets);
+                    newTokens.Add(new NumericToken(value));
+                    index = end;
+                }
+                else
+                {
+                    newTokens.Add(tokens[index]);
+                }
             }
             else
             {
@@ -102,13 +113,15 @@ class Calculator
     {
         var depth = 0; 
         for (var index = Startindex; index < tokens.Count; index++)
-        {
-            switch (tokens[index].type)
+        { 
+            switch (tokens[index])
             {
-                case Type.OpenBracket:
-                    depth++; break;
-                case Type.ClosedBracket:
-                    depth--; break;
+                case OperatorToken operatorToken:
+                    if (operatorToken.type == Type.OpenBracket)
+                        depth++;
+                    else if (operatorToken.type == Type.ClosedBracket)
+                        depth--;
+                    break;
             }
 
             if (depth == 0)
