@@ -4,15 +4,15 @@ class Calculator
 {
     public static float Calculate(string expression)
     {
-        var tokens = Tokenize(expression).ToList();
+        var tokens = Tokenizer.Tokenize(expression).ToList();
         var result = evaluate(tokens);
         return result;
                 
     }
 
-    //recursive function to evaluate result 
     private static float evaluate(List<Tokens> tokens)
     {
+        //bidmas 
         tokens = evalauteBrackets(tokens);
         tokens = evalauteOperation(tokens,"/");
         tokens = evalauteOperation(tokens,"*");
@@ -118,27 +118,6 @@ class Calculator
         throw new NotImplementedException();
     }
 
-    private static IEnumerable<Tokens> Tokenize(string expression)
-    {
-        var bit = "";
-        foreach (var c in expression)
-        {
-            if (char.IsDigit(c) || c == '.')
-                bit += c;
-            else 
-            {   
-                if (bit.Length > 0)
-                    yield return new Tokens(bit, true);
-                yield return new Tokens(c.ToString(),false);
-                bit = "";
-            }
-
-        }
-        if (!string.IsNullOrEmpty(bit))
-            yield return new Tokens(bit,true);
-
-
-    }
 
     private static void DumpTokens(List<Tokens> tokens, string stage)
     {
