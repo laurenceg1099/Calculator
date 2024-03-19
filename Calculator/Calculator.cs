@@ -1,4 +1,6 @@
-﻿namespace Calculator;
+﻿using System.Text;
+
+namespace Calculator;
 
 public class Calculator
 {
@@ -14,6 +16,7 @@ public class Calculator
     {
         //bidmas 
         tokens = evalauteBrackets(tokens);
+        tokens = evalauteOperation(tokens, "^");
         tokens = evalauteOperation(tokens,"/");
         tokens = evalauteOperation(tokens,"*");
         tokens = evalauteOperation(tokens,"+");
@@ -58,6 +61,8 @@ public class Calculator
                 result = left.value + right.value; break;
             case "-":
                 result = left.value - right.value; break;
+            case "^":
+                result = (float) (Math.Pow(left.value, right.value)); break;
         }
         var newTokens = tokens.Take(firstIndex - 1).ToList();
         newTokens.Add(new NumericToken(result));
@@ -128,7 +133,7 @@ public class Calculator
                 return index;
         }
 
-        throw new NotImplementedException();
+        throw new Exception("Brackets do not Match");
     }
 
 

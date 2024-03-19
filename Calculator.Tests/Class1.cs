@@ -22,7 +22,12 @@ namespace Calculator.Tests
             Assert.That(Calculator.Calculate("(1+(1*2))/2"), Is.EqualTo(1.5));
             Assert.That(Calculator.Calculate("((1+(1*2))/2)-1"), Is.EqualTo(0.5));
             Assert.That(Calculator.Calculate("(2*3)/(15-9)"), Is.EqualTo(1));
-            
+            Assert.That(Calculator.Calculate("3^2"), Is.EqualTo(9));
+            Assert.That(Calculator.Calculate("3^(4/2)"), Is.EqualTo(9));
+            Assert.That(Calculator.Calculate("4^(3-1)"), Is.EqualTo(16));
+            Assert.That(Calculator.Calculate("4^(1+1)"), Is.EqualTo(16));
+            Assert.That(Calculator.Calculate("4^(2*1)"), Is.EqualTo(16));
+
         }
     }
 }

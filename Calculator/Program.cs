@@ -9,7 +9,7 @@ namespace Calculator
     {
         static void Main(string[] args) 
         {
-            Console.WriteLine(Calculator.Calculate("((8*4)/2)+1"));
+            Console.WriteLine(Calculator.Calculate("(3^2"));
         }
     }
 
