@@ -128,10 +128,7 @@ namespace Calculator.UI
 
         }
 
-        private void Input_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void _control_ce_Click(object sender, EventArgs e)
         {
@@ -140,6 +137,9 @@ namespace Calculator.UI
             _CalcSting.Clear();
         }
 
+        private void Input_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
