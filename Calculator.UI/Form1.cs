@@ -6,7 +6,7 @@ namespace Calculator.UI
     {
         private StringBuilder _CalcSting = new StringBuilder();
         private bool ShiftClick = false;
-        private string _answer;
+        public string _answer;
         public Calculator()
         {
             InitializeComponent();
@@ -135,7 +135,7 @@ namespace Calculator.UI
 
         private void _control_ce_Click(object sender, EventArgs e)
         {
-            
+
             Output.Text = "";
             Input.Text = "";
             _CalcSting.Clear();
@@ -168,9 +168,25 @@ namespace Calculator.UI
         private void Ans_Click(object sender, EventArgs e)
         {
             Input.Text += "Ans";
-;            _CalcSting.Append(_answer);
+            ; _CalcSting.Append(_answer);
         }
 
+        private void Power_Click(object sender, EventArgs e)
+        {
+            Input.Text += "^";
+            _CalcSting.Append("^");
+        }
 
+        private void pi_Click(object sender, EventArgs e)
+        {
+            Input.Text += "pi";
+            _CalcSting.Append(Math.PI.ToString());
+        }
+
+        private void e_Click(object sender, EventArgs e)
+        {
+            Input.Text += "e";
+            _CalcSting.Append(Math.E.ToString());
+        }
     }
 }

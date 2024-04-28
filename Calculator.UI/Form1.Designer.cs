@@ -30,6 +30,10 @@
         {
             Output = new RichTextBox();
             panel1 = new Panel();
+            e = new Button();
+            pi = new Button();
+            Power = new Button();
+            Ans = new Button();
             Left_bracket = new Button();
             Right_bracket = new Button();
             Shift = new Button();
@@ -51,26 +55,29 @@
             _digit_2 = new Button();
             _digit_1 = new Button();
             Input = new RichTextBox();
-            Ans = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // Output
             // 
             Output.BackColor = Color.White;
-            Output.BorderStyle = BorderStyle.FixedSingle;
+            Output.BorderStyle = BorderStyle.None;
             Output.Font = new Font("Verdana", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Output.ForeColor = SystemColors.ControlText;
             Output.Location = new Point(4, 53);
+            Output.Margin = new Padding(0, 3, 3, 3);
             Output.Name = "Output";
             Output.ReadOnly = true;
             Output.RightToLeft = RightToLeft.No;
-            Output.Size = new Size(532, 74);
+            Output.Size = new Size(520, 74);
             Output.TabIndex = 0;
             Output.Text = "";
             // 
             // panel1
             // 
+            panel1.Controls.Add(e);
+            panel1.Controls.Add(pi);
+            panel1.Controls.Add(Power);
             panel1.Controls.Add(Ans);
             panel1.Controls.Add(Left_bracket);
             panel1.Controls.Add(Right_bracket);
@@ -96,6 +103,62 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(532, 650);
             panel1.TabIndex = 1;
+            // 
+            // e
+            // 
+            e.BackColor = Color.FromArgb(34, 34, 34);
+            e.Font = new Font("Segoe UI", 18F);
+            e.ForeColor = Color.Gold;
+            e.Location = new Point(262, -1);
+            e.Margin = new Padding(2);
+            e.Name = "e";
+            e.Size = new Size(127, 82);
+            e.TabIndex = 23;
+            e.Text = "e";
+            e.UseVisualStyleBackColor = false;
+            e.Click += e_Click;
+            // 
+            // pi
+            // 
+            pi.BackColor = Color.FromArgb(34, 34, 34);
+            pi.Font = new Font("Segoe UI", 18F);
+            pi.ForeColor = Color.Gold;
+            pi.Location = new Point(131, -1);
+            pi.Margin = new Padding(2);
+            pi.Name = "pi";
+            pi.Size = new Size(127, 82);
+            pi.TabIndex = 22;
+            pi.Text = "pi";
+            pi.UseVisualStyleBackColor = false;
+            pi.Click += pi_Click;
+            // 
+            // Power
+            // 
+            Power.BackColor = Color.DimGray;
+            Power.Font = new Font("Segoe UI", 18F);
+            Power.ForeColor = Color.Gold;
+            Power.Location = new Point(393, 430);
+            Power.Margin = new Padding(2);
+            Power.Name = "Power";
+            Power.Size = new Size(127, 82);
+            Power.TabIndex = 21;
+            Power.Text = "^";
+            Power.UseVisualStyleBackColor = false;
+            Power.Click += Power_Click;
+            // 
+            // Ans
+            // 
+            Ans.BackColor = Color.DimGray;
+            Ans.Font = new Font("Segoe UI", 18F);
+            Ans.ForeColor = Color.Gold;
+            Ans.Location = new Point(262, 430);
+            Ans.Margin = new Padding(2);
+            Ans.Name = "Ans";
+            Ans.Size = new Size(127, 82);
+            Ans.TabIndex = 20;
+            Ans.Text = "Ans";
+            Ans.UseVisualStyleBackColor = false;
+            Ans.Click += Ans_Click;
             // 
             // Left_bracket
             // 
@@ -367,29 +430,15 @@
             // Input
             // 
             Input.BackColor = Color.White;
-            Input.BorderStyle = BorderStyle.FixedSingle;
+            Input.BorderStyle = BorderStyle.None;
             Input.Font = new Font("Verdana", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Input.ForeColor = SystemColors.ControlText;
             Input.Location = new Point(4, 12);
             Input.Name = "Input";
             Input.ReadOnly = true;
-            Input.Size = new Size(532, 43);
+            Input.Size = new Size(520, 43);
             Input.TabIndex = 12;
             Input.Text = "";
-            // 
-            // Ans
-            // 
-            Ans.BackColor = Color.DimGray;
-            Ans.Font = new Font("Segoe UI", 18F);
-            Ans.ForeColor = Color.Gold;
-            Ans.Location = new Point(262, 430);
-            Ans.Margin = new Padding(2);
-            Ans.Name = "Ans";
-            Ans.Size = new Size(127, 82);
-            Ans.TabIndex = 20;
-            Ans.Text = "Ans";
-            Ans.UseVisualStyleBackColor = false;
-            Ans.Click += Ans_Click;
             // 
             // Calculator
             // 
@@ -433,5 +482,8 @@
         private Button Left_bracket;
         private Button Right_bracket;
         private Button Ans;
+        private Button Power;
+        private Button e;
+        private Button pi;
     }
 }

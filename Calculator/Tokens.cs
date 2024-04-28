@@ -3,7 +3,6 @@
 public class Tokens
 {
 
-
 }
 
 class NumericToken : Tokens
@@ -13,6 +12,7 @@ class NumericToken : Tokens
     {
         value = Decimal.Parse(newbit);
     }
+
 
     public NumericToken(Decimal value)
     {
