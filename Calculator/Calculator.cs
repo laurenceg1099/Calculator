@@ -4,7 +4,7 @@ namespace Calculator;
 
 public class Calculator
 {
-    public static float Calculate(string expression)
+    public static Decimal Calculate(string expression)
     {
         var tokens = Tokenizer.Tokenize(expression).ToList();
         var result = evaluate(tokens);
@@ -12,7 +12,7 @@ public class Calculator
                 
     }
 
-    private static float evaluate(List<Tokens> tokens)
+    private static Decimal evaluate(List<Tokens> tokens)
     {
         //bidmas 
         tokens = evalauteBrackets(tokens);
@@ -48,7 +48,7 @@ public class Calculator
         if (firstIndex == -1)
             return tokens;
         var bits = tokens.Skip(firstIndex - 1).Take(3).ToList();
-        var result = 0f;
+        Decimal result = 0;
         var left = (NumericToken) bits[0];
         var right = (NumericToken)bits[2];
         switch (operation)
@@ -62,7 +62,7 @@ public class Calculator
             case "-":
                 result = left.value - right.value; break;
             case "^":
-                result = (float) (Math.Pow(left.value, right.value)); break;
+                result = (Decimal) (Math.Pow(( Double)left.value, (Double) right.value)); break;
         }
         var newTokens = tokens.Take(firstIndex - 1).ToList();
         newTokens.Add(new NumericToken(result));

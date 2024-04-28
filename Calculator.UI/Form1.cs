@@ -5,6 +5,8 @@ namespace Calculator.UI
     public partial class Calculator : Form
     {
         private StringBuilder _CalcSting = new StringBuilder();
+        private bool ShiftClick = false;
+        private string _answer;
         public Calculator()
         {
             InitializeComponent();
@@ -118,6 +120,7 @@ namespace Calculator.UI
                 Output.Text = outputCalculate;
                 _CalcSting.Clear();
                 _CalcSting.Append(outputCalculate);
+                _answer = Output.Text;
             }
 
             catch
@@ -132,6 +135,7 @@ namespace Calculator.UI
 
         private void _control_ce_Click(object sender, EventArgs e)
         {
+            
             Output.Text = "";
             Input.Text = "";
             _CalcSting.Clear();
@@ -141,5 +145,32 @@ namespace Calculator.UI
         {
 
         }
+
+        private void Shift_Click(object sender, EventArgs e)
+        {
+            if (ShiftClick == true)
+                ShiftClick = false;
+            else ShiftClick = true;
+        }
+
+        private void Left_bracket_Click(object sender, EventArgs e)
+        {
+            Input.Text += "(";
+            _CalcSting.Append("(");
+        }
+
+        private void Right_bracket_Click(object sender, EventArgs e)
+        {
+            Input.Text += ")";
+            _CalcSting.Append(")");
+        }
+
+        private void Ans_Click(object sender, EventArgs e)
+        {
+            Input.Text += "Ans";
+;            _CalcSting.Append(_answer);
+        }
+
+
     }
 }

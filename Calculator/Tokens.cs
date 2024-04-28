@@ -8,13 +8,13 @@ public class Tokens
 
 class NumericToken : Tokens
 {
-    public float value = 0f;
+    public Decimal value = 0;
     public NumericToken(string newbit)
     {
-        value = float.Parse(newbit);
+        value = Decimal.Parse(newbit);
     }
 
-    public NumericToken(float value)
+    public NumericToken(Decimal value)
     {
         this.value = value;
     }
